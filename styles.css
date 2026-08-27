@@ -387,10 +387,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-inner {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
-  text-align: center;
+  gap: 60px;
+  text-align: left;
   padding: 80px 0 120px;
 }
 
@@ -451,118 +452,87 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: rgba(255,255,255,0.65);
   line-height: 1.85;
   max-width: 600px;
-  margin: 0 auto 36px;
+  margin: 0 0 36px 0;
 }
 
 .hero-buttons {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 14px;
 }
 
-/* Right column: candidate card */
-.hero-card-area { display: flex; justify-content: flex-end; }
+/* Right column: candidate photo */
+.hero-card-area { display: flex; justify-content: flex-end; align-items: center; }
 
-.candidate-plaque-frame {
+.hero-photo-wrapper {
   position: relative;
   width: 100%;
-  max-width: 400px;
-  margin-top: 20px;
+  max-width: 420px;
+  z-index: 2;
+  margin-left: auto;
 }
 
-.candidate-plaque-frame::before {
-  content: '';
+/* We style the photo to sit well against the navy background even with its red curtain */
+.hero-photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 40px 140px 40px 140px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 
+              0 0 0 8px rgba(255,255,255,0.06);
+  display: block;
+}
+
+.hero-photo-deco {
   position: absolute;
-  top: -15px; left: -15px;
-  width: 120px; height: 120px;
+  bottom: -20px;
+  left: -20px;
+  width: 120px;
+  height: 120px;
   background: radial-gradient(circle, var(--gold) 2px, transparent 2px);
   background-size: 16px 16px;
-  z-index: 1;
+  z-index: -1;
+  opacity: 0.6;
 }
 
-.plaque-photo {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  aspect-ratio: 4/5;
-  background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255,255,255,0.1);
+.hero-photo-tag {
+  position: absolute;
+  bottom: 40px;
+  left: -30px; /* Point to Les on the left */
+  background: var(--white);
+  color: var(--navy-deep);
+  padding: 14px 24px;
   border-radius: var(--radius-lg);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.25), 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid var(--gold);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-lg);
+  gap: 4px;
 }
-
-.plaque-photo svg {
-  width: 42px; height: 42px;
-  color: rgba(255,255,255,0.25);
-}
-
-.plaque-photo .ph-label {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.3);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 600;
-}
-
-.plaque-text-box {
-  position: absolute;
-  bottom: -30px;
-  right: -20px;
-  z-index: 3;
-  background: var(--white);
-  padding: 24px 30px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-xl);
-  border-left: 4px solid var(--gold);
-  width: 90%;
-  transition: transform 0.4s var(--ease);
-}
-
-.candidate-plaque-frame:hover .plaque-text-box {
-  transform: translateY(-5px);
-}
-
-.plaque-name {
+.hero-photo-tag .name {
   font-family: var(--font-display);
-  font-size: 2rem;
-  color: var(--navy-deep);
-  margin-bottom: 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
   line-height: 1;
 }
-
-.plaque-role {
-  font-size: 0.85rem;
+.hero-photo-tag .role {
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--slate);
-  line-height: 1.4;
-  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-@media (max-width: 600px) {
-  .candidate-plaque-frame {
-    max-width: 320px;
-  }
-  .candidate-plaque-frame::before {
-    display: none;
-  }
-  .plaque-text-box {
-    right: -10px;
-    width: 95%;
-    padding: 16px 20px;
-  }
+  letter-spacing: 0.08em;
 }
 
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 60px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+  .hero-content { display: flex; flex-direction: column; align-items: center; }
+  .hero-lead { margin: 0 auto 36px auto; }
+  .hero-buttons { justify-content: center; }
   .hero-card-area { display: flex; justify-content: center; margin-top: 20px; }
+  .hero-photo-wrapper { margin-left: 0; }
+  .hero-photo-tag { left: 20px; right: auto; bottom: 30px; }
   .hero { min-height: auto; padding-bottom: 120px; }
 }
 
